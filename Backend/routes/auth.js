@@ -3,7 +3,9 @@ const router=express.Router()
 const { body, validationResult } = require('express-validator');
 const Student=require('../models/Student')
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
+const JWT_SECRET="BahulTyagi"
 
 // create a student using: POST "/api/auth/createuser". doesnt require login
 router.post('/createuser', 
@@ -13,7 +15,6 @@ router.post('/createuser',
   body('name').isLength({min: 3})
 ], 
 async (req, res) => {
-
   // if there are errrors, return bad request and the errors
   const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -34,14 +35,17 @@ async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       password: secPass
-    })
-    
-    // .then(student=>res.send(student)).catch(err=>{
-    //   console.log(err);
-    //   res.json({error: "Please enter a valid email"})
-    // })
+    });
 
-    res.json({student})
+const data={
+  student:{ 
+    id: student.id
+  }
+}
+
+    const authToken=jwt.sign(data, JWT_SECRET)
+
+    res.json({authToken})
 })
 
 module.exports=router;
