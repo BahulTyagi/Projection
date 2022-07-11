@@ -4,14 +4,17 @@ const { body, validationResult } = require('express-validator');
 const Student=require('../models/Student')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fetchuser=require('../middleware/fetchuser')
 
 const JWT_SECRET="BahulTyagi"
 
+
+//Route 1
 // create a student using: POST "/api/auth/createuser". doesnt require login
 router.post('/createuser', 
 [
-  body('password').isLength({ min: 5 }),
-  body('email').isEmail(),
+  body('password', 'password must have min 5 characters').isLength({ min: 5 }),
+  body('email', 'Enter a valid email').isEmail(),
   body('name').isLength({min: 3})
 ], 
 async (req, res) => {
@@ -20,6 +23,7 @@ async (req, res) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    try{
 
     //check whether a student with this email already exist
     let student=await Student.findOne({email: req.body.email});
@@ -29,7 +33,6 @@ async (req, res) => {
 
     const salt=await bcrypt.genSalt(10);
     const secPass=await bcrypt.hash(req.body.password, salt)
-
     student = await Student.create({
       id: req.body.id,
       name: req.body.name,
@@ -40,12 +43,74 @@ async (req, res) => {
 const data={
   student:{ 
     id: student.id
-  }
+    }
 }
 
     const authToken=jwt.sign(data, JWT_SECRET)
-
     res.json({authToken})
+
+  }catch(error){
+    console.error(error.message);
+    res.status(500).send("Some Error Occured");
+  }
 })
+
+// Route 2: Login
+// Authenticate a student using: POST "/api/auth/login". doesnt require login
+router.post('/login', 
+[
+  body('email', 'Enter a valid email').isEmail(),
+  body('password', 'password cant be empty').exists()
+], 
+async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const {email, password}=req.body;
+
+  try{
+    let student= await Student.findOne({email});
+    if(!student)
+    {
+      return res.status(400).json({error: "Incorrect email or password"})
+    }
+
+    const passwordCompare=await bcrypt.compare(password, student.password);
+    if(!passwordCompare)
+    {
+      return res.status(400).json({error: "Incorrect email or password"}) 
+    }
+
+    const data={
+      student:{
+        id: student.id
+      }
+    }
+    const authToken=jwt.sign(data, JWT_SECRET);
+    res.json({authToken})
+  }
+  catch(error){
+    console.error(error.message);
+    res.status(500).send(" Error Occured");
+  }
+})
+
+//Route 3: 
+// fetching student details from mongodb using : POST "/api/auth/getuser" , login required
+
+router.get('/getuser', fetchuser, async(req, res)=>{
+  try {
+    studentId=req.student.id;
+    const student=await Student.find({id:studentId}).select("-password")
+    res.json({student});
+  } catch (error) {
+    console.error(error.message);
+      res.status(500).send(" Error Occured");
+  }
+
+})
+
 
 module.exports=router;
