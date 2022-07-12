@@ -2,23 +2,23 @@ import React, { useState } from 'react'
 
 
 const Login = () => {
-  const [user, setUser] = useState({ email: "", password: "" })
+  const [student, setStudent] = useState({ email: "", password: "" })
 
 
   const handleInputs = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value })
+    setStudent({ ...student, [e.target.name]: e.target.value })
   };
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();  // for no reload of our page
-
+  
     const response = await fetch("http://localhost:5000/api/auth/login", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email: user.email, password: user.password })
+      body: JSON.stringify({ email: student.email, password: student.password })
     });
     const json = await response.json();
     console.log(json);
@@ -36,12 +36,12 @@ const Login = () => {
 
               <div className="form-group mb-3 col-lg-9">
                 <label htmlFor="email" className="form-label">EMAIL</label>
-                <input type="email" name="email" className="form-control" id="email" value={user.email} onChange={handleInputs} aria-describedby="emailHelp" />
+                <input type="email" name="email" className="form-control" id="email" value={student.email} onChange={handleInputs} aria-describedby="emailHelp" />
               </div>
 
               <div className="form-groups mb-3 col-lg-9">
                 <label htmlFor="password" className="form-label">PASSWORD</label>
-                <input type="password" name="password" className="form-control" value={user.password} onChange={handleInputs} id="password" />
+                <input type="password" name="password" className="form-control" value={student.password} onChange={handleInputs} id="password" />
               </div>
 
               <button type="submit" className="btn btn-primary col-lg-9">Submit</button>

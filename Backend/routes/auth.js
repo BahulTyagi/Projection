@@ -60,7 +60,7 @@ const data={
 router.post('/login', 
 [
   body('email', 'Enter a valid email').isEmail(),
-  body('password', 'password cant be empty').exists()
+  body('password', 'password cant be empty').exists(),
 ], 
 async (req, res) => {
   const errors = validationResult(req);
@@ -68,10 +68,10 @@ async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const {email, password}=req.body;
+  const { email, password }=req.body;
 
   try{
-    let student= await Student.findOne({email});
+    let student= await Student.findOne({ email });
     if(!student)
     {
       return res.status(400).json({error: "Incorrect email or password"})
