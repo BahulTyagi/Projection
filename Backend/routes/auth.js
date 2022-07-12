@@ -63,6 +63,8 @@ router.post('/login',
   body('password', 'password cant be empty').exists(),
 ], 
 async (req, res) => {
+
+  let success=false;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -74,12 +76,14 @@ async (req, res) => {
     let student= await Student.findOne({ email });
     if(!student)
     {
+      success=false;
       return res.status(400).json({error: "Incorrect email or password"})
     }
 
     const passwordCompare=await bcrypt.compare(password, student.password);
     if(!passwordCompare)
     {
+      success=false;
       return res.status(400).json({error: "Incorrect email or password"}) 
     }
 
@@ -89,7 +93,8 @@ async (req, res) => {
       }
     }
     const authToken=jwt.sign(data, JWT_SECRET);
-    res.json({authToken})
+    success=true;
+    res.json({success, authToken})
   }
   catch(error){
     console.error(error.message);

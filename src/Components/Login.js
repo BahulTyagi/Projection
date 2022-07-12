@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const [student, setStudent] = useState({ email: "", password: "" })
 
+
+  let navigate=useNavigate();
 
   const handleInputs = (e) => {
     setStudent({ ...student, [e.target.name]: e.target.value })
@@ -22,6 +24,14 @@ const Login = () => {
     });
     const json = await response.json();
     console.log(json);
+    if(json.success){
+      //save the auth token and redirect
+      localStorage.setItem('token', json.authToken);
+      navigate("/");
+    }
+    else{
+      alert("Invalid details entered hain")
+    }
   }
 
 
