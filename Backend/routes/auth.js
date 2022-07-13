@@ -18,6 +18,9 @@ router.post('/createuser',
   body('name').isLength({min: 3})
 ], 
 async (req, res) => {
+
+  let success=false;
+
   // if there are errrors, return bad request and the errors
   const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -28,7 +31,7 @@ async (req, res) => {
     //check whether a student with this email already exist
     let student=await Student.findOne({email: req.body.email});
     if(student){
-      return res.status(400).json({error: "a user with this email already exits broo"})
+      return res.status(400).json({success, error: "a user with this email already exits broo"})
     }
 
     const salt=await bcrypt.genSalt(10);
@@ -45,9 +48,9 @@ const data={
     id: student.id
     }
 }
-
+    success=true
     const authToken=jwt.sign(data, JWT_SECRET)
-    res.json({authToken})
+    res.json({success, authToken})
 
   }catch(error){
     console.error(error.message);
