@@ -27,7 +27,7 @@ const Login = () => {
     if(json.success){
       //save the auth token and redirect
       localStorage.setItem('token', json.authToken);
-      navigate("/");
+      navigate("/StudentMenu");
     }
     else{
       alert("Invalid details entered hain")

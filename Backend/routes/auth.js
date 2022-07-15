@@ -95,6 +95,10 @@ async (req, res) => {
         id: student.id
       }
     }
+    
+    // console.log(student.id)
+    
+
     const authToken=jwt.sign(data, JWT_SECRET);
     success=true;
     res.json({success, authToken})

@@ -3,6 +3,10 @@ import Navbar from './Components/Navbar'
 import Home from './Components/Home'
 import ReactDOM from "react-dom/client";
 import SignUp from './Components/SignUp'
+import StudentMenu from './Components/StudentMenu';
+import CreateTeam from './Components/CreateTeam'
+
+
 import {
   BrowserRouter,
   Routes,
@@ -18,6 +22,8 @@ function App() {
       <Route path="/" element={<Home />}/>
       <Route path="/login" element={<Login />}/>
       <Route path="/signup" element={<SignUp />}/>
+      <Route path="/StudentMenu" element={<StudentMenu />}/>
+      <Route path="/CreateTeam" element={<CreateTeam />}/>
     </Routes>
   </BrowserRouter>
   );
