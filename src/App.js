@@ -6,7 +6,6 @@ import SignUp from './Components/SignUp'
 import StudentMenu from './Components/StudentMenu';
 import CreateTeam from './Components/CreateTeam'
 
-
 import {
   BrowserRouter,
   Routes,
@@ -15,6 +14,7 @@ import {
 import './App.css';
 
 function App() {
+
   return (
     <BrowserRouter>
     <Navbar/>

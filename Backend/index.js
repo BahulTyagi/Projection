@@ -12,6 +12,7 @@ app.use(cors());
 
 // saare routes yaha hai
 app.use('/api/auth', require('./routes/auth'))
+// app.use('/api/nav', require('./routes/nav'))
 
 
 app.listen(port, () => {

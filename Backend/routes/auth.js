@@ -6,6 +6,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fetchuser=require('../middleware/fetchuser')
 
+const Team=require('../models/Team')
+
 const JWT_SECRET="BahulTyagi"
 
 
@@ -43,6 +45,8 @@ async (req, res) => {
       password: secPass
     });
 
+    const sid=student.id;
+
 const data={
   student:{ 
     id: student.id
@@ -50,7 +54,8 @@ const data={
 }
     success=true
     const authToken=jwt.sign(data, JWT_SECRET)
-    res.json({success, authToken})
+    res.json({success, sid, authToken})
+    console.log(sid)
 
   }catch(error){
     console.error(error.message);
@@ -119,10 +124,51 @@ router.get('/getuser', fetchuser, async(req, res)=>{
     res.json({student});
   } catch (error) {
     console.error(error.message);
-      res.status(500).send(" Error Occured");
+    res.status(500).send(" Error Occured");
   }
 
 })
+
+
+
+//Route 4
+// Student clicks on "CreateTeam" and Team id is generated
+router.post('/createteam', async (req, res) => {
+
+  let team=await Team.findOne({Tid: req.body.Tid});
+  if(team){
+    return res.status(400).json({error: "a team with this TeamId already exits broo"})
+  }
+
+    team = await Team.create({
+    Tid: req.body.Tid,
+    Sid: req.body.sid
+    // Fid: req.body.Fid
+  });
+
+  res.send("Team Created")
+  
+  });
+
+
+
+
+//Route 5
+//Student Clicks on "Join Team" and enter the team id and gets into the team then, Login req
+router.get('/jointeam', async (req, res) => {
+  let a=45
+  let team=await Team.findOne({Tid: req.body.Tid});
+  if(team){
+    await Team.updateOne({Tid: req.body.Tid },
+      { $push: { Sid : a }})
+  }
+  else{
+    return res.status(400).json({error: "Team doesn't exist"})
+  }
+
+  res.send("Joined In")
+  
+  });
 
 
 module.exports=router;

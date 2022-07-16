@@ -1,4 +1,4 @@
-import React, { useState, navigate } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid';
 
@@ -33,7 +33,9 @@ export default function SignUp() {
           if(json.success){
             //save the auth token and redirect
             localStorage.setItem('token', json.authToken);
-            navigate("/");
+            localStorage.setItem('sid', json.sid)
+
+            navigate("/StudentMenu");
           }
           else{
             alert("Invalid details entered hain")
