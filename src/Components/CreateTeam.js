@@ -12,13 +12,15 @@ const CreateTeam =()=> {
     e.preventDefault(); 
     
      const sid=localStorage.getItem('sid')
+     const token=localStorage.getItem('token')
     
 
 
   const response = await fetch("http://localhost:5000/api/auth/createteam", {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'auth-token': token
             },
             body: JSON.stringify({ Tid, sid})
           });

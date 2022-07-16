@@ -133,8 +133,8 @@ router.get('/getuser', fetchuser, async(req, res)=>{
 
 //Route 4
 // Student clicks on "CreateTeam" and Team id is generated
-router.post('/createteam', async (req, res) => {
-
+router.post('/createteam', fetchuser, async (req, res) => {
+  const sid=req.student.id;
   let team=await Team.findOne({Tid: req.body.Tid});
   if(team){
     return res.status(400).json({error: "a team with this TeamId already exits broo"})
@@ -142,7 +142,7 @@ router.post('/createteam', async (req, res) => {
 
     team = await Team.create({
     Tid: req.body.Tid,
-    Sid: req.body.sid
+    Sid: sid
     // Fid: req.body.Fid
   });
 
