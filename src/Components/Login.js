@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+
   const [student, setStudent] = useState({ email: "", password: "" })
 
 
@@ -33,7 +34,6 @@ const Login = () => {
       alert("Invalid details entered hain")
     }
   }
-
 
   return (
     <>
@@ -69,4 +69,5 @@ const Login = () => {
     </>
   )
 }
-export default Login
+export default Login;
+

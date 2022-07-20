@@ -143,7 +143,7 @@ router.post('/createteam', fetchuser, async (req, res) => {
     team = await Team.create({
     Tid: req.body.Tid,
     Sid: sid
-    // Fid: req.body.Fid
+    
   });
 
   res.send("Team Created")

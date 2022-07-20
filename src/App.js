@@ -4,7 +4,9 @@ import Home from './Components/Home'
 import ReactDOM from "react-dom/client";
 import SignUp from './Components/SignUp'
 import StudentMenu from './Components/StudentMenu';
-import CreateTeam from './Components/CreateTeam'
+import CreateTeam from './Components/CreateTeam';
+
+import Create from './Components/Create'
 
 import {
   BrowserRouter,
@@ -15,6 +17,7 @@ import './App.css';
 
 function App() {
 
+
   return (
     <BrowserRouter>
     <Navbar/>
@@ -24,6 +27,8 @@ function App() {
       <Route path="/signup" element={<SignUp />}/>
       <Route path="/StudentMenu" element={<StudentMenu />}/>
       <Route path="/CreateTeam" element={<CreateTeam />}/>
+      
+      <Route path="/Create" element={<Create />}/>
     </Routes>
   </BrowserRouter>
   );
