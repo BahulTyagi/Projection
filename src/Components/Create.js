@@ -1,7 +1,38 @@
-import React from 'react'
+import React, {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 
 
 export default function Create() {
+
+  let navigate=useNavigate();
+
+
+  const [teamId, setTeamId] = useState(" ")
+
+  const handleChange=(e)=>{
+      setTeamId(e.target.value);
+  }
+
+  const handleClick= async (e)=>{
+      e.preventDefault();
+
+      const token=localStorage.getItem('token')
+      const response = await fetch("http://localhost:5000/api/auth/join", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token':token
+
+        },
+        body: JSON.stringify({ Tid: teamId})
+      });
+
+      const json = await response.json();
+      if(json.success)
+      alert('You are added into the team..!')
+
+  }
+
   return (
     <>
       <div className="container-fluid  mt-5 top:10px  shadow- mb-5  pd-3 bg-body rounded center  " >
@@ -33,9 +64,9 @@ export default function Create() {
                 <p className="card-text">Accept the Invite.</p>
                 <div className="form-group">
 
-                  <textarea className="form-control-sm" id="textarea" rows="2" col="6" placeholder='sampleid:123467889'></textarea>
+                  <textarea className="form-control-sm" id="textarea" rows="2" col="6" placeholder='XXXXXXXXXX' name="teamid" value={teamId} onChange={handleChange}></textarea>
                 </div>
-                <a href="#" className="btn btn-primary">GENERATE</a>
+                <button onClick={handleClick} type="submit" className="btn btn-primary col-lg-9">JOIN</button>
               </div>
             </div>
           </div>

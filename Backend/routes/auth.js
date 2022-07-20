@@ -155,18 +155,22 @@ router.post('/createteam', fetchuser, async (req, res) => {
 
 //Route 5
 //Student Clicks on "Join Team" and enter the team id and gets into the team then, Login req
-router.get('/jointeam', async (req, res) => {
-  let a=45
+router.post('/join', fetchuser, async (req, res) => {
+  let success=false;
+  const sid=req.student.id;
+  
+
   let team=await Team.findOne({Tid: req.body.Tid});
   if(team){
+    success=true;
     await Team.updateOne({Tid: req.body.Tid },
-      { $push: { Sid : a }})
+      { $push: { Sid : sid }})
   }
   else{
     return res.status(400).json({error: "Team doesn't exist"})
   }
 
-  res.send("Joined In")
+  res.json({success})
   
   });
 
