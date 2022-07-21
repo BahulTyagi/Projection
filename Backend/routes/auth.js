@@ -134,19 +134,23 @@ router.get('/getuser', fetchuser, async(req, res)=>{
 //Route 4
 // Student clicks on "CreateTeam" and Team id is generated
 router.post('/createteam', fetchuser, async (req, res) => {
+
+  let success=false;
+
   const sid=req.student.id;
   let team=await Team.findOne({Tid: req.body.Tid});
   if(team){
     return res.status(400).json({error: "a team with this TeamId already exits broo"})
   }
 
+    success=true;
     team = await Team.create({
     Tid: req.body.Tid,
     Sid: sid
     
   });
 
-  res.send("Team Created")
+  res.json({success})
   
   });
 
@@ -174,5 +178,20 @@ router.post('/join', fetchuser, async (req, res) => {
   
   });
 
+
+
+  //Route 6
+  // Student can see the names of all team members
+  router.get('/view', fetchuser, async (req, res)=>{
+    let success=false;  
+    const sid=req.student.id;
+      let team= await Team.findOne({Sid: sid})
+     if(team){
+      success=true;
+      res.json({success, team})
+     }
+      else
+      res.json({error:"you are not a member of any team"})
+  });
 
 module.exports=router;

@@ -22,8 +22,9 @@ const CreateTeam =()=> {
             body: JSON.stringify({Tid})
           });
 
-
-        console.log("Team created")
+          const json = await response.json();
+          if(json.success)
+          alert('Team Created..!')
 
         }
 

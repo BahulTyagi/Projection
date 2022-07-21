@@ -5,6 +5,7 @@ import ReactDOM from "react-dom/client";
 import SignUp from './Components/SignUp'
 import StudentMenu from './Components/StudentMenu';
 import CreateTeam from './Components/CreateTeam';
+import ViewTeam from './Components/ViewTeam';
 
 import Create from './Components/Create'
 
@@ -27,7 +28,7 @@ function App() {
       <Route path="/signup" element={<SignUp />}/>
       <Route path="/StudentMenu" element={<StudentMenu />}/>
       <Route path="/CreateTeam" element={<CreateTeam />}/>
-      
+      <Route path="/ViewTeam" element={<ViewTeam />} />
       <Route path="/Create" element={<Create />}/>
     </Routes>
   </BrowserRouter>
