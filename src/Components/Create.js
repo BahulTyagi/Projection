@@ -7,7 +7,7 @@ export default function Create() {
   let navigate=useNavigate();
 
 
-  const [teamId, setTeamId] = useState(" ")
+  const [teamId, setTeamId] = useState("")
 
   const handleChange=(e)=>{
       setTeamId(e.target.value);
@@ -50,9 +50,13 @@ export default function Create() {
       console.log(json.success)
       console.log(json.team)
       if(json.success){
-        let data=JSON.stringify(json.team.Sid);
-        console.log(data)
-        localStorage.setItem('team', data)
+        // let data=JSON.stringify(json.team.Sid);
+        // console.log(data)
+        // localStorage.setItem('team', data)
+
+        let jData=json.team.Sid;
+        localStorage.setItem('teamMem', jData)
+      
         navigate('/ViewTeam');
       }
       else{
@@ -65,7 +69,8 @@ export default function Create() {
     <>
       <div className="container-fluid  mt-5 top:10px  shadow- mb-5  pd-3 bg-body rounded center  " >
         <div className="row row-cols-1 row-cols-md-3 g-4">
-          <div div className="col">
+
+          {/* <div div className="col">
             <div className="card h-100" style={{ width: '30rem' }}>
               <img src="./p1.webp" className="card-img-top" alt="" />
               <div className="card-body border-info mb-3 g-4 text-center text-bg-dark">
@@ -77,6 +82,9 @@ export default function Create() {
                 <a href="#" className="btn btn-primary">GENERATE</a>
               </div>
             </div>
+          </div> */}
+
+          <div div className="col">           
           </div>
 
 
@@ -85,10 +93,9 @@ export default function Create() {
               <img src="./gg3.png" className="card-img-top" alt="" />
               <div className="card-body border-info mb-3 g-4 text-center text-bg-dark">
                 <h1 className="card-title">JOIN TEAM</h1>
-                <p className="card-text">Enter the Team Id to join a Team.</p>
+                <p className="card-text">Enter a TEAM ID to join a Team.</p>
                 <div className="form-group">
-
-                  <textarea className="form-control-sm" id="textarea" rows="2" col="6" placeholder='XXXXXXXXXX' name="teamid" value={teamId} onChange={handleChange}></textarea>
+                  <textarea className="form-control-sm" id="textarea" rows="1" col="6" placeholder='TEAM ID HERE' name="teamid" value={teamId} onChange={handleChange}></textarea>
                 </div>
                 <button onClick={handleClick} type="submit" className="btn btn-primary col-lg-9">JOIN</button>
               </div>

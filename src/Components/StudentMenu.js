@@ -14,7 +14,12 @@ const StudentMenu = () => {
 
 
     const handleJoin=()=>{
-        console.log("new feature now worked")
+        console.log("Join Button clicked")
+        navigate("/Create");
+    }
+
+    const handleView=()=>{
+        console.log("View Button Clicked")
         navigate("/Create");
     }
 
@@ -22,7 +27,7 @@ const StudentMenu = () => {
         <>
             <button type="button" className="btn btn-lg btn-primary mx-5 my-5" onClick={handleCreate}>Create Team</button>
             <button type="button" className="btn btn-lg btn-secondary mx-5" onClick={handleJoin}>Join Team</button>
-            <button type="button" className="btn btn-lg btn-success mx-5">My Team</button>
+            <button type="button" className="btn btn-lg btn-success mx-5" onClick={handleView}>My Team</button>
         </>
     )
 }

@@ -189,7 +189,7 @@ router.post('/join', fetchuser, async (req, res) => {
      if(team){
       success=true;
       res.json({success, team})
-     }
+      }
       else
       res.json({error:"you are not a member of any team"})
   });
