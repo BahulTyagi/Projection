@@ -20,7 +20,7 @@ const StudentMenu = () => {
 
     const handleView=()=>{
         console.log("View Button Clicked")
-        navigate("/Create");
+        navigate("/View");
     }
 
     return (

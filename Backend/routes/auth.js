@@ -194,4 +194,27 @@ router.post('/join', fetchuser, async (req, res) => {
       res.json({error:"you are not a member of any team"})
   });
 
+
+
+  //Route 7
+  //Basically Here , the previous  Route 6 is extended , in route 6 we are only able to get team details , in which we have Student id's .
+  // using the Student ID's found in route 6 , now we will find studnet names in route 7
+  router.get('/find', async(req, res)=>{
+    let success=false;
+
+    const sid=req.header('sid');
+
+    let student=await Student.findOne({Sid: sid});
+
+    if(student){
+      success=true;
+      res.json({success, student});
+    }
+    else{
+      res.json({error:"Error in getting student name while Viewing the members"})
+    }
+
+  })
+
+
 module.exports=router;

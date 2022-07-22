@@ -1,5 +1,4 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -32,9 +31,8 @@ const CreateTeam =()=> {
 
   return (
     <>
-      <div className="container-fluid  mt-1 top:10px  shadow- mb-1  pd-3 bg-body rounded center  " >
+      <div className="container-fluid  mt-1 top:10px  shadow- mb-1  pd-3 bg-body rounded center" >
         <div className="row row-cols-1 row-cols-md-3 g-4">
-
 
         <div div className="col">           
           </div>
